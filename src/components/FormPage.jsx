@@ -32,7 +32,7 @@ function FormPage() {
         gender: '',
         favAnimal: '',
         userRating: 0,
-        terms: false,
+        terms: false
     })
 
     const [open, setOpen] = useState(false)
