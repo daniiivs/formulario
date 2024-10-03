@@ -25,25 +25,29 @@ import DialogTitle from "@mui/material/DialogTitle"
 
 
 function FormPage() {
+    // Objeto data que contiene atributos para cada valor recogido en la encuesta
     const [data, setData] = useState({
-        name: '',
+        name: '', // Todos empiezan vacíos
         surname: '',
         age: '',
         gender: '',
         favAnimal: '',
-        userRating: 0,
-        terms: false
+        userRating: 0, // La puntuación de usuario empieza en 0
+        terms: false // Para que aparezca el checkbox desmarcado
     })
 
+    // Controlar la apertura y cierre del diálogo
     const [open, setOpen] = useState(false)
 
+    // Controlar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault()
-        setOpen(true)
-        console.log(data)
+        setOpen(true) // Abre el diálogo
+        console.log(data) // Imprime en consola los datos del usuario
     }
 
-    const handleClear = (e) => {
+    // Reestablece los valores del formulario (los vacía)
+    const handleClear = () => {
         setData({
             ...data,
             name: '',
@@ -56,10 +60,11 @@ function FormPage() {
         })
     }
 
+    // Cada handle controla el campo específico
     const handleChangeName = (e) => {
         setData({
             ...data,
-            name: e.target.value
+            name: e.target.value // Obtiene el valor de la variable en cuestión
         })
     }
 
@@ -94,17 +99,18 @@ function FormPage() {
     const handleChangeUserRating = (e) => {
         setData({
             ...data,
-            userRating: parseInt(e.target.value)
+            userRating: parseInt(e.target.value) // Convertimos el valor a entero, ya que Rating trabaja con un número
         })
     }
 
     const handleChangeTerms = (e) => {
         setData({
             ...data,
-            terms: e.target.checked
+            terms: e.target.checked // Usamos .checked en vez de .value para obtener si está o no marcado (true/false)
         })
     }
 
+    // Cambia el valor de open a false, para cerrar el diálogo
     const handleClose = () => {
         setOpen(false)
     };
@@ -113,16 +119,16 @@ function FormPage() {
         <Container>
             <Box
                 component='form'
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit} // Al enviar el formulario se ejecuta handleSubmit
             >
                 <Grid container spacing={{xs: 1, sm: 2}}>
-                    <Grid size={{xs: 12, sm: 6, md: 5}}>
+                    <Grid size={{xs: 12, sm: 6, md: 5}}> {/*Para que sea responsive*/}
                         <TextField
                             label='Name'
-                            onChange={handleChangeName}
-                            value={data.name}
-                            required
-                            fullWidth
+                            onChange={handleChangeName} // Ejecuta la función handleChangeName
+                            value={data.name} // Su valor será el que tenga data en su atributo name
+                            required // Campo obligatorio antes de ser enviado
+                            fullWidth // Ocupa la totalidad del grid
                         />
                     </Grid>
                     <Grid size={{xs: 12, sm: 6, md: 5}}>
@@ -137,7 +143,7 @@ function FormPage() {
                     <Grid size={{xs: 12, sm: 3, md: 2}}>
                         <TextField
                             label='Age'
-                            type='number'
+                            type='number' // Hace que solo se puedan introducir números
                             onChange={handleChangeAge}
                             value={data.age}
                             required
@@ -154,6 +160,7 @@ function FormPage() {
                                 value={data.gender}
                                 row
                             >
+                                {/*Cada uno de los botones radio junto al valor que pasarán si son seleccionados*/}
                                 <FormControlLabel value="female" control={<Radio required/>} label="Female"/>
                                 <FormControlLabel value="male" control={<Radio required/>} label="Male"/>
                                 <FormControlLabel value="other" control={<Radio required/>} label="Other"/>
@@ -167,11 +174,12 @@ function FormPage() {
                                 labelId="selectLabel"
                                 id="select"
                                 label="Select your favorite animal"
-                                defaultValue=""
+                                defaultValue="" //Para que no haya ningún campo seleccionado por defecto
                                 onChange={handleChangeFavAnimal}
                                 value={data.favAnimal}
                                 required
                             >
+                                {/*Cada item del select*/}
                                 <MenuItem value="dog">Dog</MenuItem>
                                 <MenuItem value="cat">Cat</MenuItem>
                                 <MenuItem value="horse">Horse</MenuItem>
@@ -196,6 +204,7 @@ function FormPage() {
                         <FormGroup>
                             <FormControlLabel
                                 required
+                                // El checkbox con el valor de data.terms (true o false)
                                 control={<Checkbox onChange={handleChangeTerms} checked={data.terms}/>}
                                 label="I have read and agree to the terms and conditions"
                             />
@@ -206,7 +215,7 @@ function FormPage() {
                             fullWidth
                             type='submit'
                             variant='contained'
-                            disabled={!data.terms}
+                            disabled={!data.terms} // Si el checkbox no está marcado (false), entonces el botón está deshabilitado (!false)
                         >Submit</Button>
                     </Grid>
                     <Grid size={6}>
@@ -234,7 +243,7 @@ function FormPage() {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>NO</Button>
-                        <Button onClick={handleClose}> YES </Button>
+                        <Button onClick={handleClose}>YES</Button>
                     </DialogActions>
                 </Dialog>
             </Box>
